@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anggota Siswa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            padding: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .students-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Card Style */
+        .student-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .student-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Zigzag Layout - Alternating Left and Right */
+        .student-card:nth-child(odd) {
+            flex-direction: row;
+            margin-right: auto;
+            margin-left: 0;
+        }
+
+        .student-card:nth-child(even) {
+            flex-direction: row-reverse;
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        /* Photo Container */
+        .photo-container {
+            flex-shrink: 0;
+        }
+
+        .photo-wrapper {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .student-card:nth-child(even) .photo-wrapper {
+            border-color: #764ba2;
+        }
+
+        .profile-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-placeholder {
+            color: white;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        /* Student Info */
+        .student-info {
+            flex: 1;
+        }
+
+        .student-number {
+            font-size: 0.9em;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .student-card:nth-child(even) .student-number {
+            color: #764ba2;
+        }
+
+        .student-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .student-note {
+            font-size: 0.95em;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Stagger animation delay */
+        .student-card:nth-child(1) { animation-delay: 0.05s; }
+        .student-card:nth-child(2) { animation-delay: 0.1s; }
+        .student-card:nth-child(3) { animation-delay: 0.15s; }
+        .student-card:nth-child(4) { animation-delay: 0.2s; }
+        .student-card:nth-child(5) { animation-delay: 0.25s; }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            .student-card {
+                padding: 20px;
+                gap: 15px;
+            }
+
+            .student-card:nth-child(odd),
+            .student-card:nth-child(even) {
+                flex-direction: row;
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .photo-wrapper {
+                width: 80px;
+                height: 80px;
+            }
+
+            .student-name {
+                font-size: 1.2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .students-container {
+                gap: 20px;
+            }
+
+            .student-card {
+                padding: 15px;
+                gap: 12px;
+            }
+
+            .photo-wrapper {
+                width: 70px;
+                height: 70px;
+                border-width: 3px;
+            }
+
+            .student-name {
+                font-size: 1.1em;
+            }
+
+            .student-note {
+                font-size: 0.85em;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 50px;
+            padding: 20px;
+            opacity: 0.9;
+        }
+
+        .footer p {
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👥 Anggota kelas</h1>
+            <p>Sofware Engineering</p>
+        </div>
+
+        <div class="students-container">
+            <!-- Siswa 1 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                        <img src="gambar/zia.jpeg" class="profile-photo" alt="zia">
+                        <!-- Ganti dengan: <img src="img/siswa1.jpg" class="profile-photo" alt="Ahmad"> -->
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 01</div>
+                    <div class="student-name">Alyazia</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 2 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/linda.jpeg" class="profile-photo" alt="linda">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 02</div>
+                    <div class="student-name">Amalia Linda Sari</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 3 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                  <img src="gambar/manda.jpeg" class="profile-photo" alt="manda">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 03</div>
+                    <div class="student-name">Amanda putri Aprilia</div>
+                    <div class="student-note">Sekretaris</div>
+                </div>
+            </div>
+
+            <!-- Siswa 4 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/anggela.jpeg" class="profile-photo" alt="anggela">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 04</div>
+                    <div class="student-name">Anggela Dwi Puspita</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 5 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                  <img src="gambar/El.jpg" class="profile-photo" alt="El">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 05</div>
+                    <div class="student-name">El Farabi Ben Amrullah</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 6 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                   <img src="gambar/eza.jpeg" class="profile-photo" alt="eza">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 06</div>
+                    <div class="student-name">Eza Ainur Azhar</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 7 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+           <img src="gambar/fitri.jpeg" class="profile-photo" alt="fitri">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 07</div>
+                    <div class="student-name">Fitri Sulistyowati</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 8 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                   <img src="gambar/habib.jpeg" class="profile-photo" alt="habib">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 08</div>
+                    <div class="student-name">Habib W</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 9 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                   <img src="gambar/intan.jpeg" class="profile-photo" alt="intan">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 09</div>
+                    <div class="student-name">Intan Cahya ningrum</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 10 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/januar.jpeg" class="profile-photo" alt="januar">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 10</div>
+                    <div class="student-name">Januar Dwi Permana</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 11 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/jumrotun.jpeg" class="profile-photo" alt="jumrotun">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 11</div>
+                    <div class="student-name">Jumrotun</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 12 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/kokoh.jpg" class="profile-photo" alt="kokoh">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 12</div>
+                    <div class="student-name">Kokoh Beni M</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 13 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/kurnia.jpeg" class="profile-photo" alt="kurnia">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 13</div>
+                    <div class="student-name">Kurnia Hidayatus Sholekhah</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 14 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/zahra.jpeg" class="profile-photo" alt="zahra">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 14</div>
+                    <div class="student-name">Lutfia Rizqi Zahrani</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 15 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/dinar.jpeg" class="profile-photo" alt="dinar">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 15</div>
+                    <div class="student-name">M Dinar Ali</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 16 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                     <img src="gambar/jeki.jpeg" class="profile-photo" alt="jeki">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 16</div>
+                    <div class="student-name">M Muzaki</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 17 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/akbar.jpeg" class="profile-photo" alt="akbar">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 17</div>
+                    <div class="student-name">M akbar</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 18 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/fiky.jpeg" class="profile-photo" alt="fiky">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 18</div>
+                    <div class="student-name">M ficky Mulya</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 19 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/ibnu.jpeg" class="profile-photo" alt="ibnu">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 19</div>
+                    <div class="student-name">M Ibnu Rafi</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 20 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/iswanto.jpeg" class="profile-photo" alt="iswanto">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 20</div>
+                    <div class="student-name">M zaki Iswanto</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 21 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/nadia.jpg" class="profile-photo" alt="nadia">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 21</div>
+                    <div class="student-name">Nadia Umi Kholsum</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 22 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/nizar.jpeg" class="profile-photo" alt="nizar">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 22</div>
+                    <div class="student-name">Nizar Kurniawan</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 23 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/denggal.jpeg" class="profile-photo" alt="denggal">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 23</div>
+                    <div class="student-name">Rizky Safarudin</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 24 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/safira.jpeg" class="profile-photo" alt="safira">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 24</div>
+                    <div class="student-name">Safira Dwi Rahma</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 25 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/sandi.jpeg" class="profile-photo" alt="sandi">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 25</div>
+                    <div class="student-name">Sandi Eka Yulianto</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 26 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/sazkia.jpeg" class="profile-photo" alt="sazkia">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 26</div>
+                    <div class="student-name">Saskia Nisa</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 27 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/#" class="profile-photo" alt="Ahmad">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 27</div>
+                    <div class="student-name">Sahrani Rahmadani</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 28 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/teguh.jpeg" class="profile-photo" alt="teguh">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 28</div>
+                    <div class="student-name">Teguh Wibowo</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 29 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/tyo.jpeg" class="profile-photo" alt="tyo">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 29</div>
+                    <div class="student-name">Tyo Andika Saputra</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+
+            <!-- Siswa 30 -->
+            <div class="student-card">
+                <div class="photo-container">
+                    <div class="photo-wrapper">
+                    <img src="gambar/kikan.jpeg" class="profile-photo" alt="kikan">
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="student-number">No. 30</div>
+                    <div class="student-name">Kikan Queen Anastasia Ollivia R</div>
+                    <div class="student-note">Anggota</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>* ALWAYS TOGETHER FOREVER *</p>
+            <p style="margin-top: 10px;">Total Siswa: <strong>30 Orang</strong></p>
+        </div>
+    </div>
+</body>
+</html>

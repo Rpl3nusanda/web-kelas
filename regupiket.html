@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Regu Piket Kelas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Particles Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Generate multiple particles with different properties */
+        .particle:nth-child(1) {
+            left: 5%;
+            width: 4px;
+            height: 4px;
+            animation-duration: 15s;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            left: 15%;
+            width: 6px;
+            height: 6px;
+            animation-duration: 12s;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(3) {
+            left: 25%;
+            width: 3px;
+            height: 3px;
+            animation-duration: 18s;
+            animation-delay: 4s;
+        }
+
+        .particle:nth-child(4) {
+            left: 35%;
+            width: 5px;
+            height: 5px;
+            animation-duration: 14s;
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(5) {
+            left: 45%;
+            width: 4px;
+            height: 4px;
+            animation-duration: 16s;
+            animation-delay: 3s;
+        }
+
+        .particle:nth-child(6) {
+            left: 55%;
+            width: 6px;
+            height: 6px;
+            animation-duration: 13s;
+            animation-delay: 5s;
+        }
+
+        .particle:nth-child(7) {
+            left: 65%;
+            width: 3px;
+            height: 3px;
+            animation-duration: 17s;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(8) {
+            left: 75%;
+            width: 5px;
+            height: 5px;
+            animation-duration: 15s;
+            animation-delay: 4s;
+        }
+
+        .particle:nth-child(9) {
+            left: 85%;
+            width: 4px;
+            height: 4px;
+            animation-duration: 14s;
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(10) {
+            left: 95%;
+            width: 6px;
+            height: 6px;
+            animation-duration: 16s;
+            animation-delay: 3s;
+        }
+
+        .particle:nth-child(11) {
+            left: 10%;
+            width: 3px;
+            height: 3px;
+            animation-duration: 13s;
+            animation-delay: 5s;
+        }
+
+        .particle:nth-child(12) {
+            left: 20%;
+            width: 5px;
+            height: 5px;
+            animation-duration: 17s;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(13) {
+            left: 30%;
+            width: 4px;
+            height: 4px;
+            animation-duration: 15s;
+            animation-delay: 4s;
+        }
+
+        .particle:nth-child(14) {
+            left: 40%;
+            width: 6px;
+            height: 6px;
+            animation-duration: 14s;
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(15) {
+            left: 50%;
+            width: 3px;
+            height: 3px;
+            animation-duration: 16s;
+            animation-delay: 3s;
+        }
+
+        .particle:nth-child(16) {
+            left: 60%;
+            width: 5px;
+            height: 5px;
+            animation-duration: 13s;
+            animation-delay: 5s;
+        }
+
+        .particle:nth-child(17) {
+            left: 70%;
+            width: 4px;
+            height: 4px;
+            animation-duration: 17s;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(18) {
+            left: 80%;
+            width: 6px;
+            height: 6px;
+            animation-duration: 15s;
+            animation-delay: 4s;
+        }
+
+        .particle:nth-child(19) {
+            left: 90%;
+            width: 3px;
+            height: 3px;
+            animation-duration: 14s;
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(20) {
+            left: 12%;
+            width: 5px;
+            height: 5px;
+            animation-duration: 16s;
+            animation-delay: 3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: -25px -25px 20px -25px;
+            text-align: center;
+        }
+
+        .card-header h2 {
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .card-header-warning {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .card-note {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+            border: 3px solid #f5576c;
+        }
+
+        .note-content {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .note-text {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #d32f2f;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .note-price {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #c62828;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+
+        .siswa-list {
+            list-style: none;
+        }
+
+        .siswa-list li {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: all 0.2s ease;
+        }
+
+        .siswa-list li:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .siswa-list li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            opacity: 0.9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .card-header {
+                margin: -20px -20px 15px -20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .subtitle {
+                font-size: 1em;
+            }
+
+            .card-header h2 {
+                font-size: 1.3em;
+            }
+
+            .siswa-list li {
+                padding: 10px 12px;
+                font-size: 0.95em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Animated Particles -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>📋 Jadwal Regu Piket Kelas</h1>
+            <p class="subtitle">Senin - Jumat | Semester Genap 2024/2025</p>
+        </header>
+
+        <div class="cards-container">
+            <!-- SENIN -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Senin</h2>
+                </div>
+                <ul class="siswa-list">
+                    <li>Amanda</li>
+                    <li>Zahra</li>
+                    <li>Sandi</li>
+                    <li>Teguh</li>
+                    <li>Habib</li>
+                    <li>Eza</li>
+                </ul>
+            </div>
+
+            <!-- SELASA -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Selasa</h2>
+                </div>
+                <ul class="siswa-list">
+                    <li>Rani</li>
+                    <li>Rizky</li>
+                    <li>Beni</li>
+                    <li>Angela</li>
+                    <li>Januar</li>
+                    <li>Ficky</li>
+                </ul>
+            </div>
+
+            <!-- RABU -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Rabu</h2>
+                </div>
+                <ul class="siswa-list">
+                    <li>Linda</li>
+                    <li>Kurnia</li>
+                    <li>Saskia</li>
+                    <li>Nadya</li>
+                    <li>Tyo</li>
+                    <li>Iswanto</li>
+                </ul>
+            </div>
+
+            <!-- KAMIS -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Kamis</h2>
+                </div>
+                <ul class="siswa-list">
+                    <li>Intan</li>
+                    <li>Safira</li>
+                    <li>Nizar</li>
+                    <li>Dinar</li>
+                    <li>Amru</li>
+                    <li>Maulia Safira</li>
+                </ul>
+            </div>
+
+            <!-- JUMAT -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Jumat</h2>
+                </div>
+                <ul class="siswa-list">
+                    <li>Alyazia</li>
+                    <li>Jumrotun</li>
+                    <li>Akbar</li>
+                    <li>Ibnu</li>
+                    <li>Zaky</li>
+                    <li>Fitri</li>
+                </ul>
+            </div>
+        </div>
+        <!-- CATATAN PENTING -->
+        <div class="card card-note">
+            <div class="card-header card-header-warning">
+                <h2>⚠️ PERHATIAN</h2>
+            </div>
+            <div class="note-content">
+                <p class="note-text">NB: TIDAK PIKET DENDA</p>
+                <p class="note-price">Rp 2.000</p>
+            </div>
+        </div>
+    </div>
+
+
+    <footer>
+        <p style="margin-top: 10px; font-size: 0.9em;">Jadwal Piket © 2026</p>
+    </footer>
+    </div>
+</body>
+
+</html>

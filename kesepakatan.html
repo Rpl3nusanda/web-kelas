@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kesepakatan Kelas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        .particle:nth-child(1) { left: 10%; width: 10px; height: 10px; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; width: 15px; height: 15px; animation-delay: 2s; }
+        .particle:nth-child(3) { left: 30%; width: 8px; height: 8px; animation-delay: 4s; }
+        .particle:nth-child(4) { left: 40%; width: 12px; height: 12px; animation-delay: 1s; }
+        .particle:nth-child(5) { left: 50%; width: 10px; height: 10px; animation-delay: 3s; }
+        .particle:nth-child(6) { left: 60%; width: 14px; height: 14px; animation-delay: 5s; }
+        .particle:nth-child(7) { left: 70%; width: 9px; height: 9px; animation-delay: 2.5s; }
+        .particle:nth-child(8) { left: 80%; width: 11px; height: 11px; animation-delay: 4.5s; }
+        .particle:nth-child(9) { left: 90%; width: 13px; height: 13px; animation-delay: 1.5s; }
+        .particle:nth-child(10) { left: 15%; width: 10px; height: 10px; animation-delay: 3.5s; }
+
+        .container {
+            background: white;
+            max-width: 480px;
+            width: 100%;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+            margin: 20px auto;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .rules-list {
+            list-style-position: inside;
+            padding-left: 0;
+        }
+
+        .rules-list li {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .rules-list li:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            font-style: italic;
+        }
+
+        /* Smartphone (Portrait) */
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 20px;
+                border-radius: 15px;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .rules-list li {
+                font-size: 14px;
+                padding: 12px;
+                margin-bottom: 12px;
+            }
+
+            .footer {
+                font-size: 12px;
+                margin-top: 20px;
+            }
+        }
+
+        /* Smartphone (Landscape) & Small Tablet */
+        @media (min-width: 481px) and (max-width: 767px) {
+            .container {
+                padding: 25px;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .rules-list li {
+                font-size: 15px;
+                padding: 13px;
+            }
+        }
+
+        /* Tablet */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .container {
+                padding: 35px;
+                max-width: 600px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .rules-list li {
+                font-size: 17px;
+                padding: 16px;
+            }
+
+            .footer {
+                font-size: 15px;
+            }
+        }
+
+        /* Desktop/PC */
+        @media (min-width: 1025px) {
+            body {
+                padding: 40px;
+            }
+
+            .container {
+                padding: 45px;
+                max-width: 700px;
+            }
+
+            h1 {
+                font-size: 40px;
+                margin-bottom: 35px;
+            }
+
+            .rules-list li {
+                font-size: 18px;
+                padding: 18px;
+                margin-bottom: 18px;
+            }
+
+            .footer {
+                font-size: 16px;
+                margin-top: 35px;
+            }
+        }
+
+        /* Landscape Orientation */
+        @media (orientation: landscape) and (max-height: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                margin: 10px auto;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 22px;
+                margin-bottom: 15px;
+            }
+
+            .rules-list li {
+                font-size: 14px;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+
+            .footer {
+                margin-top: 15px;
+                padding-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
+    <div class="container">
+        <h1>Kesepakatan Kelas</h1>
+        
+        <ol class="rules-list">
+            <li>Kehadiran diabsen setiap hari.</li>
+            <li>Tidak piket dikenakan denda Rp2.000.</li>
+            <li>Tidak mencoret atau mengotori tembok.</li>
+            <li>Petugas piket atau siswa terakhir wajib mengunci jendela dan pintu.</li>
+            <li>Tidak menaruh kotoran atau sampah di dalam laci.</li>
+            <li>Tidak duduk atau tiduran di atas meja.</li>
+        </ol>
+
+        <div class="footer">
+            Disepakati bersama seluruh warga kelas.
+        </div>
+    </div>
+</body>
+</html>
