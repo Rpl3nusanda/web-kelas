@@ -10,7 +10,7 @@ body {
   font-family: Arial, sans-serif;
   color: #fff;
   overflow-x: hidden;
-  background-image: url("gambar/background.jpg");
+  background-image: url("gambar/background.JPG");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -207,4 +207,5 @@ body.dark .nav-anim::after {
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
+
 }
